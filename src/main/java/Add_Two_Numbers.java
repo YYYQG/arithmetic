@@ -8,17 +8,12 @@ public class Add_Two_Numbers {
         ListNode result = new ListNode(0);
         ListNode pre = result;
         int tem = 0;
-        if(l1==null){
-            return l2;
-        }else if(l2==null){
-            return l1;
-        }
         while (l1 != null || l2 != null || tem != 0) {//循环条件
 
             int sum = 0;
             sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + tem;//l1 或 l2为空则值为0；
-            sum = sum % 10;
             tem = sum / 10;
+            sum = sum % 10;
             pre.next = new ListNode(sum);
             pre = pre.next;
             l1=l1!=null?l1.next:l1;
@@ -26,6 +21,7 @@ public class Add_Two_Numbers {
         }
         return result.next;
     }
+
 
     @Test
     public void test() {
@@ -43,9 +39,9 @@ public class Add_Two_Numbers {
         ListNode re = addTwoNumbers(l1, l2);
 
         System.out.println(re.val);
-        while (re.next != null) {
-            re = re.next;
+        while (re != null) {
             System.out.println(re.val + "---");
+            re = re.next;
         }
     }
 
