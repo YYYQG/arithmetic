@@ -34,11 +34,38 @@ public class Longest_Common_Prefix {
         return builder.toString();
     }
 
+    //分治
+    public String longestCommonPrefix2(String[] strs) {
+
+        if(strs.length==0)return "";
+        return longestCommonPrefix2(strs, 0, strs.length-1);
+    }
+
+    private String longestCommonPrefix2(String[] strs, int l, int r) {
+        if (l == r) {
+            return strs[l];
+        }
+        int mid = (r + l) / 2;
+        String left = longestCommonPrefix2(strs, l, mid);
+        String right = longestCommonPrefix2(strs, mid + 1, r);
+        return commonPrefix(left,right);
+    }
+
+    private String commonPrefix(String left, String right) {
+
+        int min = Math.min(left.length(), right.length());
+        for (int i = 0; i < min; i++) {
+            if(left.charAt(i)!=right.charAt(i))
+                return left.substring(0,i);
+        }
+        return left.substring(0,min);
+    }
+
     @Test
     public void test() {
 
         String[] s = {"flower", "flow", "flight"};
-        System.out.println(longestCommonPrefix(s));
+        System.out.println(longestCommonPrefix2(s));
 
     }
 }
