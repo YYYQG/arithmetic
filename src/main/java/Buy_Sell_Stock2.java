@@ -35,7 +35,7 @@ public class Buy_Sell_Stock2 {
             else if (minPrice < prices[i]) {
                 maxPro = maxPro + (prices[i] - minPrice);
                 if(i+1<prices.length){
-                    minPrice = prices[i + 1];
+                    minPrice = prices[i];
                 }
             }
         }
