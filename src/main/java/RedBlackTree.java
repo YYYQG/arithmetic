@@ -5,7 +5,7 @@ import org.junit.Test;
  * @description
  * @date 2022/06/10 14:53
  */
-public class RedBlackTree<K ,V extends Comparable<V>> {
+public class RedBlackTree<K extends Comparable<K> ,V extends Comparable<V>> {
 
 
     private static final boolean RED = true;
@@ -60,6 +60,12 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
         h.right.color = BLACK;
     }
 
+    /*private void flipColors(Node<K,V> h){
+        h.color = !h.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
+    }*/
+
     public Integer size(Node<K,V> node) {
          if (node == null) return 0;
          return node.n;
@@ -78,7 +84,7 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
         if (h == null) {
             return new Node<>(key, value, RED);
         }
-        int i = value.compareTo(h.value);
+        int i = key.compareTo(h.key);
         if (i < 0) {
             h = put(h.left, key, value);
         } else if (i > 0) {
@@ -170,8 +176,69 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
         return balance(h);
     }
 
+    public void delete(K key) {
+        if (!isRed(head.left) && !isRed(head.right))
+            head.color = RED;
+        head = delete(head, key);
+        if (!isEmpty()) head.color = BLACK;
+    }
+
+    private Node<K,V> delete(Node<K,V> h, K key){
+        if (key.compareTo(h.key) < 0) {
+            if (!isRed(h.left) && !isRed(h.left.left))
+                h = moveRedLeft(h);
+            h.left = delete(h.left, key);
+        } else {
+            if (isRed(h.left))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && h.right == null)
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0) {
+                h.value = get(h.right, min(h.right).key);
+                h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            } else {
+                h.right = delete(h.right, key);
+            }
+
+        }
+        return balance(h);
+    }
+
+    public V get(K key) {
+        return get(head, key);
+    }
+
+    private V get(Node<K,V> x, K key) {
+        if (x == null)
+            return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0)
+            return get(x.left, key);
+        else if (cmp > 0)
+            return get(x.right, key);
+        else
+            return x.value;
+    }
+
+    public K min() {
+        return min(head).key;
+    }
+
+    private Node<K,V> min(Node<K,V> x) {
+        if (x.left == null)
+            return x;
+        return min(x.left);
+    }
+
+    //打印
+
     @Test
     public void test() {
+
+
 
     }
 
