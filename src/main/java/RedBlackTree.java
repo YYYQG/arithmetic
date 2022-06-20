@@ -105,12 +105,22 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
     public Node<K,V> deleteMin(Node<K,V> h) {
          if (h.left == null)
              return null;
-         if (!isRed(h.left) && !isRed(h.right))
+         if (!isRed(h.left) && !isRed(h.left.left))
              h = moveRedLeft(h);
 
         h.left = deleteMin(h.left);
 
         return balance((h));
+    }
+
+    private Node<K,V> moveRedLeft(Node<K,V> h) {
+        deleteFlipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
     }
 
     public Node<K,V> balance(Node<K,V> h) {
@@ -123,20 +133,41 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
         return h;
     }
 
-    private Node<K,V> moveRedLeft(Node<K,V> h) {
-        deleteFlipColors(h);
-         if (isRed(h.right.left)) {
-             h.right = rotateRight(h.right);
-             h = rotateLeft(h);
-             flipColors(h);
-         }
-         return h;
-    }
-
     public void deleteFlipColors(Node<K,V> h) {
         h.color = BLACK;
         h.left.color = RED;
         h.right.color = RED;
+    }
+
+    public void deleteMax() {
+        if (!isRed(head.left) && !isRed(head.right)) {
+            head.color = RED;
+        }
+        head = deleteMax(head);
+        if (!isEmpty()) head.color = BLACK;
+    }
+
+    private Node<K,V> moveRedRight(Node<K,V> h) {
+        deleteFlipColors(h);
+        //算法四 有问题
+        if (isRed(h.left.left)) {
+            h = rotateRight(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
+    private Node<K,V> deleteMax(Node<K,V> h) {
+         if (isRed(h.left)) {
+             h = rotateRight(h);
+         }
+        if (h.right == null) {
+            return null;
+        }
+        if (!isRed(h.right) && !isRed(h.right.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h);
     }
 
     @Test
