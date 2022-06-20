@@ -62,14 +62,16 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
 
     public Integer size(Node<K,V> node) {
          if (node == null) return 0;
-         Integer count = 1;
-
-         return count;
+         return node.n;
     }
 
     public void put(K key, V value) {
         head = put(head, key, value);
         head.color = BLACK;
+    }
+
+    public boolean isEmpty() {
+         return head == null;
     }
 
     public Node<K,V> put(Node<K,V> h, K key, V value) {
@@ -89,6 +91,52 @@ public class RedBlackTree<K ,V extends Comparable<V>> {
         if (isRed(h.left) && isRed(h.right)) flipColors(h);
         h.n = 1 + size(h.left) + size(head.right);
         return h;
+    }
+
+
+    public void deleteMin() {
+         if (!isRed(head.left) && !isRed(head.right)) {
+             head.color = RED;
+         }
+         head = deleteMin(head);
+        if (!isEmpty()) head.color = BLACK;
+    }
+
+    public Node<K,V> deleteMin(Node<K,V> h) {
+         if (h.left == null)
+             return null;
+         if (!isRed(h.left) && !isRed(h.right))
+             h = moveRedLeft(h);
+
+        h.left = deleteMin(h.left);
+
+        return balance((h));
+    }
+
+    public Node<K,V> balance(Node<K,V> h) {
+
+        if (isRed(h.right)) h = rotateLeft(h);
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+        if (isRed(h.left) && isRed(h.left.left)) h= rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+        h.n = 1 + size(h.left) + size(head.right);
+        return h;
+    }
+
+    private Node<K,V> moveRedLeft(Node<K,V> h) {
+        deleteFlipColors(h);
+         if (isRed(h.right.left)) {
+             h.right = rotateRight(h.right);
+             h = rotateLeft(h);
+             flipColors(h);
+         }
+         return h;
+    }
+
+    public void deleteFlipColors(Node<K,V> h) {
+        h.color = BLACK;
+        h.left.color = RED;
+        h.right.color = RED;
     }
 
     @Test
