@@ -76,6 +76,15 @@ public class Sort {
         }
     }
 
+    //归并排序
+    public void mergeSort() {
+
+    }
+
+    public void merger(Integer[] a, Integer low, Integer mid, Integer high) {
+
+    }
+
 
     public double time(String alg, Integer [] a)
     {
