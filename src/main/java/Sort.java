@@ -108,7 +108,7 @@ public class Sort {
                 a[k] = temp[i];
                 i++;
             } else if (temp[i] < temp[j]) {
-                a[k] = a[i];
+                a[k] = temp[i];
                 i++;
             } else if (temp[j] < temp[i]) {
                 a[k] = temp[j];
