@@ -76,13 +76,45 @@ public class Sort {
         }
     }
 
-    //归并排序
-    public void mergeSort() {
+    private Integer[] temp;
 
+    //归并排序
+    public void mergeSort(Integer[] a) {
+        temp = new Integer[a.length];
+        mergeSort(a, 0, a.length - 1);
     }
 
-    public void merger(Integer[] a, Integer low, Integer mid, Integer high) {
+    public void mergeSort(Integer[] a, Integer low, Integer high) {
+        if (high <= low) return;
+        Integer mid = low + (high - low) / 2;
+        mergeSort(a, low, mid);
+        mergeSort(a, mid + 1, high);
+        merge(a, low, mid, high);
+    }
 
+    public void merge(Integer[] a, Integer low, Integer mid, Integer high) {
+        Integer i = low;
+        Integer j = mid + 1;
+
+        for (int k = low; k<= high; k++) {
+            temp[k] = a[k];
+        }
+
+        for (int k = low; k<= high; k ++ ) {
+            if (i > mid) {
+                a[k] = temp[j];
+                j++;
+            } else if (j > high) {
+                a[k] = temp[i];
+                i++;
+            } else if (temp[i] < temp[j]) {
+                a[k] = a[i];
+                i++;
+            } else if (temp[j] < temp[i]) {
+                a[k] = temp[j];
+                j++;
+            }
+        }
     }
 
 
@@ -114,20 +146,24 @@ public class Sort {
 
     public static void main(String[] args) {
 
-        /*Integer[] a = new Integer[5];
+        Integer[] a = new Integer[5];
         a[0] = 5;
         a[1] = 8;
         a[2] = 2;
         a[3] = 7;
         a[4] = 0;
 
-        Sort<Integer> integerSort = new Sort<>();
+        Sort integerSort = new Sort();
+
         //integerSort.selectSort(a);
         //integerSort.bubbleSort(a);
         //integerSort.insertSort(a);
-        integerSort.shellSort(a);
-        integerSort.show(a);*/
-        Sort integerSort = new Sort();
+        //integerSort.shellSort(a);
+        integerSort.mergeSort(a);
+        integerSort.show(a);
+
+
+        /*Sort integerSort = new Sort();
 
         int N = 1000;   // 被排序的数组长度
         int T = 100;    // 排序次数
@@ -136,7 +172,8 @@ public class Sort {
         double t3 = integerSort.timeRandomInput("InsertionSort", N, T);
         System.out.println("ShellSort:" + t1);
         System.out.println("SelectSort" + t2);
-        System.out.println("InsertionSort" + t3);
+        System.out.println("InsertionSort" + t3);*/
+
 
 
     }
