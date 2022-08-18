@@ -1,12 +1,15 @@
+/*
 
 import edu.princeton.cs.algs4.Stopwatch;
 
 import java.util.Random;
 
+*/
 /**
  * @description
  * @date 2022/06/22 9:57
- */
+ *//*
+
 public class Sort {
 
 
@@ -163,7 +166,8 @@ public class Sort {
         integerSort.show(a);
 
 
-        /*Sort integerSort = new Sort();
+        */
+/*Sort integerSort = new Sort();
 
         int N = 1000;   // 被排序的数组长度
         int T = 100;    // 排序次数
@@ -172,7 +176,8 @@ public class Sort {
         double t3 = integerSort.timeRandomInput("InsertionSort", N, T);
         System.out.println("ShellSort:" + t1);
         System.out.println("SelectSort" + t2);
-        System.out.println("InsertionSort" + t3);*/
+        System.out.println("InsertionSort" + t3);*//*
+
 
 
 
@@ -185,3 +190,4 @@ public class Sort {
 
 
 }
+*/
