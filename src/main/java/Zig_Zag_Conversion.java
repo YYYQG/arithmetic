@@ -1,6 +1,9 @@
 import java.awt.Stroke;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -229,13 +232,96 @@ public class Zig_Zag_Conversion {
     }
 
     public static void main(String[] args) {
-        int x=  -32;
 
-        System.out.println(x % 10);
-        x = x/10;
-        System.out.println(x);
-        System.out.println(x % 10);
     }
+
+    public int busyStudent(int[] startTime, int[] endTime, int queryTime) {
+        int n = startTime.length;
+        int maxEndTime = Arrays.stream(endTime).max().getAsInt();
+        if (queryTime > maxEndTime) {
+            return 0;
+        }
+        int[] cnt = new int[maxEndTime + 2];
+        for (int i = 0; i < n; i++) {
+            cnt[startTime[i]]++;
+            cnt[endTime[i] + 1]--;
+        }
+        int ans = 0;
+        for (int i = 0; i <= queryTime; i++) {
+            ans += cnt[i];
+        }
+        return ans;
+    }
+
+    public List<List<String>> printTree(TreeNode root) {
+        int deep = deep(root, 0);
+        int m = deep + 1;
+        int n = (1 << (deep + 1)) - 1;
+        List<List<String>> res = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            List<String> s = new ArrayList<>();
+            for (int i1 = 0; i1 < n; i1++) {
+                s.add("");
+            }
+            res.add(s);
+        }
+
+
+        return res;
+    }
+
+    public void des(List<List<String>> res,TreeNode root , int r, int c, int deep) {
+        if (root != null) {
+            res.get(r).add(c, String.valueOf(root.val));
+        }
+        if (root.left != null) {
+            des(res, root.left, r+1, c- (1<<deep-r-1), deep);
+        }
+        if (root.right != null) {
+            des(res, root.right, r+1, c+ (1<<deep-r-1), deep);
+        }
+    }
+
+    public int deep(TreeNode root, int deep) {
+        if (root == null) {
+            return deep;
+        }
+        deep++;
+        int left = deep(root.left, deep);
+        int right = deep(root.right, deep);
+        return Math.max(left, right);
+    }
+
+
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+
+        int right = binarySearch(arr, k);
+        int left = right - 1;
+
+
+
+
+
+
+    }
+
+    public int binarySearch(int[] arr, int x) {
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            int mid = (left + right) / 2;
+
+            if (x <= arr[mid]) {
+                right = mid;
+            } else if (x > arr[mid]) {
+                left = mid + 1;
+            }
+        }
+        return  left;
+    }
+
+
 
 
 }
