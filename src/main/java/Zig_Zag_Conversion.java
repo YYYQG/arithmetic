@@ -362,9 +362,83 @@ public class Zig_Zag_Conversion {
 
         return root;
     }
+//字符          数值
+//I             1
+//V             5
+//X             10
+//L             50
+//C             100
+//D             500
+//M             1000
 
+    public String intToRoman(int num) {
 
+        Map<Integer,String> map = new HashMap<>();
+        map.put(1, "I");
+        map.put(5, "V");
+        map.put(10, "X");
+        map.put(50, "L");
+        map.put(100, "C");
+        map.put(500, "D");
+        map.put(1000, "M");
 
+        StringBuilder result = new StringBuilder();
+
+        int re = num/1000;
+        num = num%1000;
+        if (re != 0) {
+            for (int i = 0; i < re; i++) {
+                result.append("M");
+            }
+        }
+
+        re = num/100;
+        num = num%100;
+        if (re != 0) {
+            if (re == 5) {
+                result.append("D");
+            } else if (re == 4) {
+                result.append("CD");
+            } else if (re == 9) {
+                result.append("CM");
+            } else {
+                for (int i = 0; i < re; i++) {
+                    result.append("C");
+                }
+            }
+        }
+
+        re = num/10;
+        num = num%10;
+        if (re != 0) {
+            if (re == 5) {
+                result.append("L");
+            } else if (re == 4) {
+                result.append("XL");
+            } else if (re == 9) {
+                result.append("XC");
+            } else {
+                for (int i = 0; i < re; i++) {
+                    result.append("x");
+                }
+            }
+        }
+
+        if (num != 0) {
+            if (re == 5) {
+                result.append("V");
+            } else if (re == 4) {
+                result.append("IV");
+            } else if (re == 9) {
+                result.append("IX");
+            } else {
+                for (int i = 0; i < re; i++) {
+                    result.append("I");
+                }
+            }
+        }
+        return  result.toString();
+    }
 
 
 
