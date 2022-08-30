@@ -1,6 +1,9 @@
 import java.awt.Stroke;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -231,9 +234,6 @@ public class Zig_Zag_Conversion {
         return result * operator;
     }
 
-    public static void main(String[] args) {
-
-    }
 
     public int busyStudent(int[] startTime, int[] endTime, int queryTime) {
         int n = startTime.length;
@@ -298,11 +298,24 @@ public class Zig_Zag_Conversion {
         int right = binarySearch(arr, k);
         int left = right - 1;
 
+        while (k-- > 0) {
+            if (left < 0) {
+                right ++;
+            } else if (right >= arr.length) {
+                left --;
+            } else if (x - arr[left] <= arr[right] - x) {
+                left --;
+            } else {
+                right ++;
+            }
+        }
 
+        List<Integer> a = new ArrayList<>();
 
-
-
-
+        for (int i = left + 1 ;i < right ;i++) {
+            a.add(arr[i]);
+        }
+        return a;
     }
 
     public int binarySearch(int[] arr, int x) {
@@ -320,6 +333,37 @@ public class Zig_Zag_Conversion {
         }
         return  left;
     }
+
+    public TreeNode insertIntoMaxTree(TreeNode root, int val) {
+        if (root == null) {
+            return null;
+        }
+        if (val > root.val) {
+            TreeNode node = new TreeNode(val);
+            node.left = root;
+            return root;
+        }
+
+        TreeNode x = root;
+
+        while (x != null) {
+            if (x.right == null) {
+                x.right = new TreeNode(val);
+                break;
+            }
+            if (x.right.val < val) {
+                TreeNode node = new TreeNode(val);
+                node.left = x.right;
+                x.right = node;
+                break;
+            }
+            x = x.right;
+        }
+
+        return root;
+    }
+
+
 
 
 
