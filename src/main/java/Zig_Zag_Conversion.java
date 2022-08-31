@@ -4,8 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import org.junit.Test;
 
@@ -438,6 +440,31 @@ public class Zig_Zag_Conversion {
             }
         }
         return  result.toString();
+    }
+
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+
+        Stack<Integer> stack = new Stack<>();
+
+        int j = 0;
+
+        for (int i = 0; i < pushed.length; i++) {
+
+            stack.push(pushed[i]);
+
+            while (!stack.isEmpty() && stack.peek() == popped[j]) {
+                stack.pop();
+                j++;
+            }
+
+        }
+
+        if (j == popped.length) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 
