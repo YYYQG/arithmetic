@@ -571,8 +571,37 @@ public class Zig_Zag_Conversion {
         return ans;
     }
 
+    public static int totalFruit(int[] fruits) {
+        int type = -1;
+        int type2 = -1;
+        int max = 0;
+        if (fruits.length == 1) {
+            return 1;
+        }
+        for (int i = 0; i < fruits.length; i++) {
+            type = fruits[i];
+            int res = 1;
+            type2 = -1;
+            for (int j = i+1; j < fruits.length; j++) {
+
+                if (fruits[j] == type || fruits[j] == type2) {
+                    res = res +1;
+                } else if (type2 == -1){
+                    type2 = fruits[j];
+                    res = res +1;
+                } else {
+                    break;
+                }
+                max = Math.max(res, max);
+            }
+
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
-        distinctSubseqII("aba");
+        int x[] = {0,1,2,2};
+        totalFruit(x);
     }
 
 
