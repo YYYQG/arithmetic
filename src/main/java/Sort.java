@@ -1,14 +1,13 @@
-/*
 
 import edu.princeton.cs.algs4.Stopwatch;
 
 import java.util.Random;
 
-*/
+
 /**
  * @description
  * @date 2022/06/22 9:57
- *//*
+ */
 
 public class Sort {
 
@@ -120,6 +119,36 @@ public class Sort {
         }
     }
 
+    //快速排序
+
+    public void quickSort(Integer[] a) {
+
+
+
+    }
+
+    private void quickSort(Integer[] a, Integer low, Integer high) {
+        if (high <= low) return;;
+        int j = partition(a, low, high);
+        quickSort(a, low, j-1);
+        quickSort(a, j+1, high);
+    }
+
+    private Integer partition(Integer[] a, Integer low, Integer high) {
+
+        int i = low;
+        int j = high + 1;
+        int v = a[low];
+        while (true) {
+            while (less(a[++i], v)) if (i == high) break;
+            while (less(v, a[--j])) if (j == low) break;
+            if (i >= j ) break;
+            exch(a, i, j);
+        }
+        exch(a, low, j);
+        return j;
+    }
+
 
     public double time(String alg, Integer [] a)
     {
@@ -148,7 +177,6 @@ public class Sort {
 
 
     public static void main(String[] args) {
-
         Integer[] a = new Integer[5];
         a[0] = 5;
         a[1] = 8;
@@ -165,8 +193,9 @@ public class Sort {
         integerSort.mergeSort(a);
         integerSort.show(a);
 
+    }
 
-        */
+}
 /*Sort integerSort = new Sort();
 
         int N = 1000;   // 被排序的数组长度
