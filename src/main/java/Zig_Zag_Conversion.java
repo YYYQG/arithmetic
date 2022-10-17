@@ -1,6 +1,7 @@
 import java.awt.Stroke;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import javafx.util.Pair;
 import org.junit.Test;
@@ -470,6 +472,108 @@ public class Zig_Zag_Conversion {
 
     //652
 
+
+    public boolean canFormArray(int[] arr, int[][] pieces) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < pieces.length; i++) {
+            int[] a = pieces[i];
+            if (a != null) {
+                map.put(a[0], i);
+            }
+        }
+        for (int i = 0; i < arr.length; ) {
+            int a = arr[i];
+            Integer idx = map.get(a);
+            if (idx == null) {
+                return false;
+            }
+            int[] b = pieces[idx];
+            for (int j = 0; j < b.length; j++) {
+                if (b[j] == arr[i]) {
+                    i++;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int numComponents(ListNode head, int[] nums) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, num);
+        }
+
+        int num = 0;
+        boolean connect = false;
+        while (head != null) {
+
+            int val = head.val;
+            if (map.containsKey(val)) {
+                connect = true;
+            } else if (connect) {
+                num++;
+                connect = false;
+            }
+            head = head.next;
+        }
+        return num;
+    }
+
+
+    public int maxChunksToSorted(int[] arr) {
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        int res = 1;
+        for (int i : arr) {
+            if (deque.isEmpty() || i > deque.peek()) {
+                deque.addFirst(i);
+                res ++;
+            } else {
+                while (!deque.isEmpty() && deque.peek() > i) {
+                    deque.removeFirst();
+                    res --;
+                }
+                deque.addFirst(i);
+            }
+        }
+        return res;
+    }
+
+
+    public static int distinctSubseqII(String s) {
+        final int MOD = 1000000007;
+        int[] last = new int[26];
+        Arrays.fill(last, -1);
+
+        int n = s.length();
+        int[] f = new int[n];
+        Arrays.fill(f, 1);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < 26; ++j) {
+                if (last[j] != -1) {
+                    f[i] = (f[i] + f[last[j]]) % MOD;
+                }
+            }
+            last[s.charAt(i) - 'a'] = i;
+        }
+
+        int ans = 0;
+        for (int i = 0; i < 26; ++i) {
+            if (last[i] != -1) {
+                ans = (ans + f[last[i]]) % MOD;
+            }
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        distinctSubseqII("aba");
+    }
 
 
 }
