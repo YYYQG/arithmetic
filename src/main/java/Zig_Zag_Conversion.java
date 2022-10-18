@@ -599,6 +599,15 @@ public class Zig_Zag_Conversion {
         return max;
     }
 
+
+    public int atMostNGivenDigitSet(String[] digits, int n) {
+
+
+
+
+        return 0;
+    }
+
     public static void main(String[] args) {
         int x[] = {0,1,2,2};
         totalFruit(x);

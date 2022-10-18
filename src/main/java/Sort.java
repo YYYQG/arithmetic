@@ -1,4 +1,5 @@
 
+import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
 
 import java.util.Random;
@@ -122,7 +123,7 @@ public class Sort {
     //快速排序
 
     public void quickSort(Integer[] a) {
-
+        StdRandom.shuffle(a);
 
 
     }
