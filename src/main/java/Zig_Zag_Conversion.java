@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.Callable;
@@ -525,25 +526,6 @@ public class Zig_Zag_Conversion {
     }
 
 
-    public int maxChunksToSorted(int[] arr) {
-
-        Deque<Integer> deque = new ArrayDeque<>();
-        int res = 1;
-        for (int i : arr) {
-            if (deque.isEmpty() || i > deque.peek()) {
-                deque.addFirst(i);
-                res ++;
-            } else {
-                while (!deque.isEmpty() && deque.peek() > i) {
-                    deque.removeFirst();
-                    res --;
-                }
-                deque.addFirst(i);
-            }
-        }
-        return res;
-    }
-
 
     public static int distinctSubseqII(String s) {
         final int MOD = 1000000007;
@@ -600,12 +582,34 @@ public class Zig_Zag_Conversion {
     }
 
 
-    public int atMostNGivenDigitSet(String[] digits, int n) {
+  //  第 1 行是 0 ，第 2 行是 01 ，第3行是 0110 。 4  0110 1001  5 01101001 10010110
 
+    public int kthGrammar(int n, int k) {
+        String x = "0";
+        String temp = "";
 
+        for (int i = 1; i < n; i++) {
+            char[] chars = x.toCharArray();
+            for (int i1 = 0; i1 < chars.length; i1++) {
+                if (chars[i1] == '0') {
+                    temp = temp + "01";
+                }
+                if (chars[i1] == '1') {
+                    temp = temp + "10";
+                }
+                if (temp.length() >= k) {
+                    break;
+                }
+            }
+            if (temp.length() >= k) {
+                x = temp;
+                break;
+            }
+            x = temp;
+            temp = "";
+        }
 
-
-        return 0;
+        return x.charAt(k - 1);
     }
 
     public static void main(String[] args) {
@@ -615,3 +619,26 @@ public class Zig_Zag_Conversion {
 
 
 }
+
+class StockSpanner {
+
+    Deque<Map<String, Integer>> deque = new LinkedList<>();
+
+    public StockSpanner() {
+
+    }
+
+    public int next(int price) {
+        int count = 1;
+        while (!deque.isEmpty() && deque.getFirst().get("price") <= price) {
+            count = count + deque.getFirst().get("count");
+            deque.removeFirst();
+        }
+        Map<String, Integer> a = new HashMap<>();
+        a.put("price", price);
+        a.put("count", count);
+        deque.addFirst(a);
+        return count;
+    }
+}
+
