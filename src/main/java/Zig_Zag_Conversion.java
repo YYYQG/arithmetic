@@ -582,39 +582,26 @@ public class Zig_Zag_Conversion {
     }
 
 
-  //  第 1 行是 0 ，第 2 行是 01 ，第3行是 0110 。 4  0110 1001  5 01101001 10010110
 
-    public int kthGrammar(int n, int k) {
-        String x = "0";
-        String temp = "";
+    public static int partitionDisjoint(int[] nums) {
 
-        for (int i = 1; i < n; i++) {
-            char[] chars = x.toCharArray();
-            for (int i1 = 0; i1 < chars.length; i1++) {
-                if (chars[i1] == '0') {
-                    temp = temp + "01";
-                }
-                if (chars[i1] == '1') {
-                    temp = temp + "10";
-                }
-                if (temp.length() >= k) {
-                    break;
-                }
+        int max = nums[0];
+        int flag = nums[0];
+        int le = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < flag) {
+                le = i;
+                flag = max;
             }
-            if (temp.length() >= k) {
-                x = temp;
-                break;
-            }
-            x = temp;
-            temp = "";
+            max = Math.max(max, nums[i]);
         }
-
-        return x.charAt(k - 1);
+        return le + 1;
     }
 
+
     public static void main(String[] args) {
-        int x[] = {0,1,2,2};
-        totalFruit(x);
+        int x[] = {5,0,3,8,6};
+        partitionDisjoint(x);
     }
 
 
